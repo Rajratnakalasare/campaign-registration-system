@@ -10,6 +10,8 @@ import com.company.campaign.survey.dto.CreateQuestionRequest;
 import com.company.campaign.survey.dto.CreateSurveyRequest;
 import com.company.campaign.survey.dto.QuestionResponseDTO;
 import com.company.campaign.survey.dto.SurveyResponseDTO;
+import com.company.campaign.survey.exception.BadRequestException;
+import com.company.campaign.survey.exception.ResourceNotFoundException;
 
 import org.springframework.stereotype.Service;
 
@@ -54,7 +56,7 @@ public class SurveyService {
     public SurveyResponseDTO getSurveyById(Long id) {
         
         Survey survey = surveyRepository.findById(id)
-                       .orElseThrow(() -> new RuntimeException("Survey does not found"));
+                       .orElseThrow(() -> new ResourceNotFoundException("Survey does not found"));
 
         return mapToDto(survey);
     }
@@ -63,10 +65,10 @@ public class SurveyService {
     public void launchSurvey(Long id) {
 
         Survey survey = surveyRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Survey does not found"));  
+                        .orElseThrow(() -> new ResourceNotFoundException("Survey does not found"));  
         
     if("LAUNCHED".equals(survey.getStatus())) {
-            throw new RuntimeException("Survey already launched");
+            throw new BadRequestException("Survey already launched");
         }
 
         survey.setStatus("LAUNCHED");
@@ -76,10 +78,10 @@ public class SurveyService {
     /*  Delete survey */
     public void deleteSurvey(Long id) {
         Survey survey = surveyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Survey not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
 
         if ("LAUNCHED".equals(survey.getStatus())) {
-            throw new RuntimeException("Launched survey cannot be deleted");
+            throw new BadRequestException("Launched survey cannot be deleted");
         }
 
         surveyRepository.delete(survey);
@@ -103,10 +105,10 @@ public class SurveyService {
     public QuestionResponseDTO addQuestion(Long surveyId, CreateQuestionRequest request) {
 
         Survey survey = surveyRepository.findById(surveyId)
-                .orElseThrow(() -> new RuntimeException("Survey not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Survey not found"));
 
                 if("LAUNCHED".equals(survey.getStatus())) {
-                    throw new RuntimeException("Cannot add questions to a Launched survey");
+                    throw new BadRequestException("Cannot add questions to a Launched survey");
                 }
 
         Question question = new Question();

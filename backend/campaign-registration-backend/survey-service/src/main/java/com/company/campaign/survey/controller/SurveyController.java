@@ -35,19 +35,19 @@ public class SurveyController {
     }
 
     @GetMapping("/{id}")
-    public SurveyResponseDTO getSurveyById(@PathVariable Long id){
+    public SurveyResponseDTO getSurveyById(@PathVariable("id") Long id){
         return surveyService.getSurveyById(id);
     }
 
     @PutMapping("/{id}/launch")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void launchSurvey(@PathVariable Long id) {
+    public void launchSurvey(@PathVariable("id") Long id) {
         surveyService.launchSurvey(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSurvey(@PathVariable Long id) {
+    public void deleteSurvey(@PathVariable("id") Long id) {
         surveyService.deleteSurvey(id);
     }
 
