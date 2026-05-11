@@ -16,6 +16,7 @@
         <module>common-persistence</module>
         <module>survey-service</module>
         <module>response-service</module>
+        <module>reporting-service</module>
     </modules>
 
 
