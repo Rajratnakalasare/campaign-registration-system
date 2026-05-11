@@ -15,6 +15,11 @@ public class SurveyResponse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    
+    @Column(name = "first_name", nullable = false, length = 80)
+    private String firstName;
+
+
     @Column(name = "user_email", nullable = false, length = 150)
     private String userEmail;
 
@@ -68,5 +73,13 @@ public class SurveyResponse {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 }
