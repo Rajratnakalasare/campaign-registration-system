@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    List<Answer> findBySurveyResponseId(Long surveyResponseId);
+    List<Answer> findBySurveyResponseIdIn(List<Long> surveyResponseIds);
 }
